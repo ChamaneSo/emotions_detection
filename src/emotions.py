@@ -88,6 +88,7 @@ model.add(Dense(7, activation='softmax'))
 
 # If you want to train the same model or try other models, go for this
 if mode == "train":
+    model.summary()
     model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])
     model_info = model.fit_generator(
             train_generator,
@@ -95,7 +96,7 @@ if mode == "train":
             epochs=num_epoch,
             validation_data=validation_generator,
             validation_steps=num_val // batch_size)
-    plot_model_history(model_info)
+    #plot_model_history(model_info)
     model.save_weights('model.h5')
 
 # emotions will be displayed on your face from the webcam feed
@@ -109,7 +110,7 @@ elif mode == "display":
     emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
 
     # start the webcam feed
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture("demo2.mp4")
     while True:
         # Find haar cascade to draw bounding box around face
         ret, frame = cap.read()
