@@ -1,72 +1,47 @@
-# Emotion detection using deep learning
+# Reference from Kazuhito Takahashi(https://twitter.com/KzhtTkhs)
+- [MediaPipe](https://mediapipe.dev/)
+- [Kazuhito00/mediapipe-python-sample](https://github.com/Kazuhito00/mediapipe-python-sample)
+- [Kazuhito00/hand-gesture-recognition-using-mediapipe](https://github.com/Kazuhito00/hand-gesture-recognition-using-mediapipe)
 
-## Introduction
+# facial emotion recognition using mediapipe
+- Estimate face mesh using MediaPipe(Python version).This is a sample program that recognizes facial emotion with a simple multilayer perceptron using the detected key points that returned from mediapipe.Although this model is 97% accurate, there is no generalization due to too little training data.
+- the project is implement from https://github.com/Kazuhito00/hand-gesture-recognition-using-mediapipe to use in facial emotion recognition
+- the keypoint.csv is empty because this file is too large to upload so if you want to training model please find new dataset or record data by yourself
 
-This project aims to classify the emotion on a person's face into one of **seven categories**, using deep convolutional neural networks. The model is trained on the **FER-2013** dataset which was published on International Conference on Machine Learning (ICML). This dataset consists of 35887 grayscale, 48x48 sized face images with **seven emotions** - angry, disgusted, fearful, happy, neutral, sad and surprised.
+This repository contains the following contents.
+- Sample program
+- Facial emotion recognition model(TFLite)
+- Script for collect data from images dataset and camera 
 
-## Dependencies
+# Requirements
+- mediapipe 0.8.9
+- OpenCV 4.5.4 or Later
+- Tensorflow 2.7.0 or Later
+- scikit-learn 1.0.1 or Later (Only if you want to display the confusion matrix) 
+- matplotlib 3.5.0 or Later (Only if you want to display the confusion matrix)
 
-* Python 3, [OpenCV](https://opencv.org/), [Tensorflow](https://www.tensorflow.org/)
-* To install the required packages, run `pip install -r requirements.txt`.
+### main.py
+This is a sample program for inference.it will use keypoint_classifier.tflite as model to predict your emotion.
 
-## Basic Usage
+### training.ipynb
+This is a model training script for facial emotion recognition.
 
-The repository is currently compatible with `tensorflow-2.0` and makes use of the Keras API using the `tensorflow.keras` library.
+### model/keypoint_classifier
+This directory stores files related to facial emotion recognition.
+The following files are stored.
+* Training data(keypoint.csv)
+* Trained model(keypoint_classifier.tflite)
+* Label data(keypoint_classifier_label.csv)
+* Inference module(keypoint_classifier.py)
 
-* First, clone the repository and enter the folder
+### Collect_from_image.py
+This script will collect the keypoints from image dataset(.jpg). you can change your dataset directory to collect data.It will use your folder name to label.
 
-```bash
-git clone https://github.com/atulapra/Emotion-detection.git
-cd Emotion-detection
-```
+### Collect_from_webcam.py
+This script will collect the keypoints from your camera. press 'k' to enter the mode to save key points that show 'Record keypoints mode' then press '0-9' as label. the key points will be added to "model/keypoint_classifier/keypoint.csv". 
 
-* Download the FER-2013 dataset inside the `src` folder.
+# Author
+Rattasart Sakunrat
 
-* If you want to train this model, use:  
-
-```bash
-cd src
-python emotions.py --mode train
-```
-
-* If you want to view the predictions without training again, you can download the pre-trained model from [here](https://drive.google.com/file/d/1FUn0XNOzf-nQV7QjbBPA6-8GLoHNNgv-/view?usp=sharing) and then run:  
-
-```bash
-cd src
-python emotions.py --mode display
-```
-
-* The folder structure is of the form:  
-  src:
-  * data (folder)
-  * `emotions.py` (file)
-  * `haarcascade_frontalface_default.xml` (file)
-  * `model.h5` (file)
-
-* This implementation by default detects emotions on all faces in the webcam feed. With a simple 4-layer CNN, the test accuracy reached 63.2% in 50 epochs.
-
-![Accuracy plot](imgs/accuracy.png)
-
-## Data Preparation (optional)
-
-* The [original FER2013 dataset in Kaggle](https://www.kaggle.com/deadskull7/fer2013) is available as a single csv file. I had converted into a dataset of images in the PNG format for training/testing.
-
-* In case you are looking to experiment with new datasets, you may have to deal with data in the csv format. I have provided the code I wrote for data preprocessing in the `dataset_prepare.py` file which can be used for reference.
-
-## Algorithm
-
-* First, the **haar cascade** method is used to detect faces in each frame of the webcam feed.
-
-* The region of image containing the face is resized to **48x48** and is passed as input to the CNN.
-
-* The network outputs a list of **softmax scores** for the seven classes of emotions.
-
-* The emotion with maximum score is displayed on the screen.
-
-## References
-
-* "Challenges in Representation Learning: A report on three machine learning contests." I Goodfellow, D Erhan, PL Carrier, A Courville, M Mirza, B
-   Hamner, W Cukierski, Y Tang, DH Lee, Y Zhou, C Ramaiah, F Feng, R Li,  
-   X Wang, D Athanasakis, J Shawe-Taylor, M Milakov, J Park, R Ionescu,
-   M Popescu, C Grozea, J Bergstra, J Xie, L Romaszko, B Xu, Z Chuang, and
-   Y. Bengio. arXiv 2013.
+# License 
+hand-gesture-recognition-using-mediapipe is under [Apache v2 license](LICENSE).

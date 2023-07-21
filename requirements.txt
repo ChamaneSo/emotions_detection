@@ -1,8 +1,5 @@
-numpy==1.22.0
-opencv-python==4.7.0.72
-tensorflow==2.9.3
-matplotlib
+tensorflow
+opencv-python
 fastapi
-uvicorn
-jinja2
-scipy
+uvicorn[standard]
+mediapipe
